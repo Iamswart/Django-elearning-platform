@@ -19,6 +19,7 @@ from django.urls import reverse_lazy
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -45,14 +46,16 @@ INSTALLED_APPS = [
     'embed_video',
     'memcache_status',
     'rest_framework',
+    'chat',
+    'channels',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -89,6 +92,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 
 
 # Password validation
@@ -151,3 +156,17 @@ REST_FRAMEWORK = {
 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
 ]
 }
+
+ASGI_APPLICATION = 'educa.routing.application'
+
+
+CHANNEL_LAYERS = {
+'default': {
+'BACKEND': 'channels_redis.core.RedisChannelLayer',
+'CONFIG': {
+'hosts': [('127.0.0.1', 6379)],
+},
+},
+}
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
